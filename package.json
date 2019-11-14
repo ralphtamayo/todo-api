@@ -6,13 +6,17 @@
   "author": "<tamayoralph24@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --watch 'src/**/*' -e ts,tsx --exec \"ts-node\" ./src/server.ts",
+    "start": "nodemon ./src/server.js",
     "fix": "eslint src/**/* --fix && tsfmt -r"
   },
   "dependencies": {
     "@koa/router": "^8.0.2",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-graphql": "^0.8.3",
+    "@types/koa-mount": "^4.0.0",
     "bcryptjs": "^2.4.3",
     "graphql": "^14.5.8",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "koa-graphiql": "^1.1.0",
@@ -22,12 +26,12 @@
     "typescript": "^3.7.2"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.3.5",
     "@types/koa": "^2.0.52",
     "@types/koa__router": "^8.0.1",
     "@types/mongoose": "^5.5.30",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.7.0",
-    "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "nodemon": "^1.19.4",
