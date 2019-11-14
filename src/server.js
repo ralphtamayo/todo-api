@@ -4,12 +4,15 @@ const mount = require('koa-mount');
 const graphqlHTTP = require('koa-graphql');
 const mongoose = require('mongoose');
 const bodyParser = require('koa-bodyparser');
+const cors = require('@koa/cors');
 
 const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
 
 const app = new Koa();
 const router = new Router();
+
+app.use(cors());
 
 app.use(bodyParser())
 	.use(router.routes())
