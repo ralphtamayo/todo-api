@@ -1,0 +1,44 @@
+const Task = require('../../models/task');
+
+module.exports = {
+	tasks: () => {
+		return Task.find()
+			.then(res => {
+				return res.map(task => {
+					return { ...task._doc };
+				});
+			}).catch(err => {
+				throw err;
+			});
+	},
+	task: args => {
+		return Task.findById(args.taskId);
+	},
+	createTask: args => {
+		const task = new Task({
+			title: args.taskInput.title,
+			description: args.taskInput.description,
+		});
+
+		return task.save()
+			.then(res => {
+				return { ...res._doc };
+			}).catch(err => {
+				console.log(err);
+				throw err;
+			});
+	},
+	updateTask: args => {
+		let data = {
+			title: args.taskInput.title,
+			description: args.taskInput.description,
+		};
+
+		return Task.findByIdAndUpdate(args.taskId, data, (error, task) => {
+			return task;
+		});
+	},
+	deleteTask: args => {
+		return Task.findByIdAndDelete(args.taskId);
+	}
+};
