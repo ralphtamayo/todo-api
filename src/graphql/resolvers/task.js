@@ -14,10 +14,11 @@ module.exports = {
 	task: args => {
 		return Task.findById(args.taskId);
 	},
-	createTask: args => {
+	createTask: (args, request) => {
 		const task = new Task({
 			title: args.taskInput.title,
 			description: args.taskInput.description,
+			createdBy: request.userId
 		});
 
 		return task.save()

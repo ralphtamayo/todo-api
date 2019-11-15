@@ -6,6 +6,7 @@ type Task {
 	title: String!
 	description: String!
 	createdAt: String!
+	createdBy: User!
 }
 
 type User {

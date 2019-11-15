@@ -8,6 +8,7 @@ const taskSchema = new Schema({
 	isDone: { type: Boolean },
 	finishedAt: { type: Date },
 	createdAt: { type: Date, default: Date.now },
+	createdBy: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('Task', taskSchema);
