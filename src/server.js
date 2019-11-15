@@ -5,6 +5,7 @@ const graphqlHTTP = require('koa-graphql');
 const mongoose = require('mongoose');
 const bodyParser = require('koa-bodyparser');
 const cors = require('@koa/cors');
+const jwt = require('jsonwebtoken');
 
 const graphQlSchema = require('./graphql/schema/index');
 const graphQlResolvers = require('./graphql/resolvers/index');
@@ -26,24 +27,31 @@ app.use((ctx, next) => {
 		return next();
 	}
 	const token = authHeader.split(' ')[1];
+
 	if (!token || token === '') {
 		ctx.isAuth = false;
+
 		return next();
 	}
+
 	let decodedToken;
+
 	try {
 		decodedToken = jwt.verify(token, 'somesupersecretkey');
 	} catch (err) {
 		ctx.isAuth = false;
+
 		return next();
 	}
+
 	if (!decodedToken) {
 		ctx.isAuth = false;
+
 		return next();
 	}
 
 	ctx.isAuth = true;
-	ctx.userId = decodedToken.toString;
+	ctx.userId = decodedToken.userId;
 
 	next();
 });

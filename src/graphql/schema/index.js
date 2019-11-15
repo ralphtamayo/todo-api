@@ -1,63 +1,55 @@
 const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
-type Booking {
-    _id: ID!
-    event: Event!
-    user: User!
-    createdAt: String!
-    updatedAt: String!
-}
-
-type Event {
-  _id: ID!
-  title: String!
-  description: String!
-  price: Float!
-  date: String!
-  creator: User!
+type Task {
+	_id: ID!
+	title: String!
+	description: String!
+	isDone: Boolean!
+	finishedAt: String
+	createdAt: String!
+	createdBy: User!
 }
 
 type User {
-  _id: ID!
-  email: String!
-  password: String
-  createdEvents: [Event!]
+	_id: ID!
+	email: String!
+	password: String
 }
 
 type AuthData {
-  userId: ID!
-  token: String!
-  tokenExpiration: Int!
+	userId: ID!
+	token: String!
+	tokenExpiration: Int!
 }
 
-input EventInput {
-  title: String!
-  description: String!
-  price: Float!
-  date: String!
+input TaskInput {
+	title: String!
+	description: String!
 }
 
 input UserInput {
-  email: String!
-  password: String!
+	email: String!
+	password: String!
 }
 
 type RootQuery {
-    events: [Event!]!
-    bookings: [Booking!]!
-    login(email: String!, password: String!): AuthData!
+	login(email: String!, password: String!): AuthData!
+	tasks: [Task!]!
+	task(taskId: ID!): Task
 }
 
 type RootMutation {
-    createEvent(eventInput: EventInput): Event
-    createUser(userInput: UserInput): User
-    bookEvent(eventId: ID!): Booking!
-    cancelBooking(bookingId: ID!): Event!
+	createUser(userInput: UserInput): User
+
+	createTask(taskInput: TaskInput): Task
+	updateTask(taskId: ID!, taskInput: TaskInput): Task
+	deleteTask(taskId: ID!): Task
+	toggleTaskCompletion(taskId: ID!): Task
 }
 
 schema {
-    query: RootQuery
-    mutation: RootMutation
+	query: RootQuery
+	mutation: RootMutation
 }
 `);
