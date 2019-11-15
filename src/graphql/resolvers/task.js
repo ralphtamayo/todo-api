@@ -2,7 +2,7 @@ const Task = require('../../models/task');
 
 module.exports = {
 	tasks: () => {
-		return Task.find()
+		return Task.find().sort('-createdAt')
 			.then(res => {
 				return res.map(task => {
 					return { ...task._doc };
@@ -18,6 +18,7 @@ module.exports = {
 		const task = new Task({
 			title: args.taskInput.title,
 			description: args.taskInput.description,
+			isDone: false,
 			createdBy: request.userId
 		});
 
@@ -43,11 +44,6 @@ module.exports = {
 		return Task.findByIdAndDelete(args.taskId);
 	},
 	toggleTaskCompletion: args => {
-		return Task.findById(args.taskId, (err, task) => {
-			task.isDone = !task.isDone;
-			task.finishedAt = task.isDone ? Date.now() : null;
-
-			return task.save();
-		});
+		return Task.findByIdAndUpdate(args.taskId, { $set: { isDone: !args.isDone } }, { new: true });
 	}
 };
