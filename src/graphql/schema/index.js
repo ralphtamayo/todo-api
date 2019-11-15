@@ -6,6 +6,7 @@ type Task {
 	title: String!
 	description: String!
 	isDone: Boolean!
+	finishedAt: String
 	createdAt: String!
 	createdBy: User!
 }
