@@ -45,7 +45,7 @@ type RootMutation {
 	createTask(taskInput: TaskInput): Task
 	updateTask(taskId: ID!, taskInput: TaskInput): Task
 	deleteTask(taskId: ID!): Task
-	toggleTaskCompletion(taskId: ID!): Task
+	toggleTaskCompletion(taskId: ID!, isDone: Boolean): Task
 }
 
 schema {
