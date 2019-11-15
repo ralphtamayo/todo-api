@@ -5,6 +5,7 @@ type Task {
 	_id: ID!
 	title: String!
 	description: String!
+	isDone: Boolean!
 	createdAt: String!
 	createdBy: User!
 }
@@ -43,6 +44,7 @@ type RootMutation {
 	createTask(taskInput: TaskInput): Task
 	updateTask(taskId: ID!, taskInput: TaskInput): Task
 	deleteTask(taskId: ID!): Task
+	toggleTaskCompletion(taskId: ID!): Task
 }
 
 schema {

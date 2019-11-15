@@ -41,5 +41,13 @@ module.exports = {
 	},
 	deleteTask: args => {
 		return Task.findByIdAndDelete(args.taskId);
+	},
+	toggleTaskCompletion: args => {
+		return Task.findById(args.taskId, (err, task) => {
+			task.isDone = !task.isDone;
+			task.finishedAt = task.isDone ? Date.now() : null;
+
+			return task.save();
+		});
 	}
 };
