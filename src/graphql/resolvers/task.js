@@ -10,11 +10,12 @@ module.exports = {
 	},
 	createTask: (args, request) => {
 		try {
-			if (args.taskInput.title == null) {
+			console.log(args);
+			if (args.taskInput.title == '') {
 				throw new Error('Title should not be blank.');
 			}
 
-			if (args.taskInput.description == null) {
+			if (args.taskInput.description == '') {
 				throw new Error('Description should not be blank.');
 			}
 
@@ -45,9 +46,7 @@ module.exports = {
 				description: args.taskInput.description,
 			};
 
-			return Task.findByIdAndUpdate(args.taskId, data, (error, task) => {
-				return task;
-			});
+			return Task.findByIdAndUpdate(args.taskId, data);
 		} catch (err) {
 			throw err;
 		}
