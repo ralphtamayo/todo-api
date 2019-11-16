@@ -9,24 +9,48 @@ module.exports = {
 		return Task.findById(args.taskId);
 	},
 	createTask: (args, request) => {
-		const task = new Task({
-			title: args.taskInput.title,
-			description: args.taskInput.description,
-			isDone: false,
-			createdBy: request.userId
-		});
+		try {
+			if (args.taskInput.title == null) {
+				throw new Error('Title should not be blank.');
+			}
 
-		return task.save();
+			if (args.taskInput.description == null) {
+				throw new Error('Description should not be blank.');
+			}
+
+			const task = new Task({
+				title: args.taskInput.title,
+				description: args.taskInput.description,
+				isDone: false,
+				createdBy: request.userId
+			});
+
+			return task.save();
+		} catch (err) {
+			throw err;
+		}
 	},
 	updateTask: args => {
-		let data = {
-			title: args.taskInput.title,
-			description: args.taskInput.description,
-		};
+		try {
+			if (args.taskInput.title == '') {
+				throw new Error('Title should not be blank.');
+			}
 
-		return Task.findByIdAndUpdate(args.taskId, data, (error, task) => {
-			return task;
-		});
+			if (args.taskInput.description == '') {
+				throw new Error('Description should not be blank.');
+			}
+
+			let data = {
+				title: args.taskInput.title,
+				description: args.taskInput.description,
+			};
+
+			return Task.findByIdAndUpdate(args.taskId, data, (error, task) => {
+				return task;
+			});
+		} catch (err) {
+			throw err;
+		}
 	},
 	deleteTask: args => {
 		return Task.findByIdAndDelete(args.taskId);
