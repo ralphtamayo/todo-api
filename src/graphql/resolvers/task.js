@@ -1,15 +1,9 @@
 const Task = require('../../models/task');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
-	tasks: () => {
-		return Task.find().sort('-createdAt')
-			.then(res => {
-				return res.map(task => {
-					return { ...task._doc };
-				});
-			}).catch(err => {
-				throw err;
-			});
+	tasks: args => {
+		return Task.find({ createdBy: args.userId }).sort('-createdAt');
 	},
 	task: args => {
 		return Task.findById(args.taskId);
@@ -22,13 +16,7 @@ module.exports = {
 			createdBy: request.userId
 		});
 
-		return task.save()
-			.then(res => {
-				return { ...res._doc };
-			}).catch(err => {
-				console.log(err);
-				throw err;
-			});
+		return task.save();
 	},
 	updateTask: args => {
 		let data = {

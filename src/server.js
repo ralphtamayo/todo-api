@@ -22,10 +22,12 @@ app.use(bodyParser())
 
 app.use((ctx, next) => {
 	const authHeader = ctx.get('Authorization');
+
 	if (!authHeader) {
 		ctx.isAuth = false;
 		return next();
 	}
+
 	const token = authHeader.split(' ')[1];
 
 	if (!token || token === '') {
