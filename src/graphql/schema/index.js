@@ -35,7 +35,7 @@ input UserInput {
 
 type RootQuery {
 	login(email: String!, password: String!): AuthData!
-	tasks: [Task!]!
+	tasks(userId: ID!): [Task!]!
 	task(taskId: ID!): Task
 }
 
